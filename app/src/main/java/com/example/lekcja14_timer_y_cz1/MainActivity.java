@@ -20,14 +20,15 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textViewTimer;
     private Button btnStart,btnReset,btnZapisz,btnStop;
-    private ListView listViewZapis;
-
     private boolean Isrunning = false;
     private int sekundy = 0;
     private int minuty = 0;
     private int godziny = 0;
 
+    private ArrayList<String> arrayListTime = new ArrayList<>();
+    private ArrayAdapter<String> arrayAdapter;
 
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
         btnStop = findViewById(R.id.btnStop);
         btnReset = findViewById(R.id.btnReset);
         btnZapisz = findViewById(R.id.btnZapisz);
-
+        listView = findViewById(R.id.ListViewZapis);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,arrayListTime);
+        listView.setAdapter(arrayAdapter);
         Handler handler = new Handler();
         handler.post(new Runnable() {
             @Override
@@ -76,7 +79,13 @@ public class MainActivity extends AppCompatActivity {
                 textViewTimer.setText(displayTime(sekundy));
             }
         });
-
+        btnZapisz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                arrayListTime.add(displayTime(sekundy));
+                arrayAdapter.notify();
+            }
+        });
     }
     private String displayTime(int howMuch){
         int sekundy = howMuch%60;
