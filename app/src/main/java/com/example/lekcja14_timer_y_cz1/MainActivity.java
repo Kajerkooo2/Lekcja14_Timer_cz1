@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 arrayListTime.add(displayTime(sekundy));
-                arrayAdapter.notify();
+                arrayAdapter.notifyDataSetChanged();
             }
         });
     }
